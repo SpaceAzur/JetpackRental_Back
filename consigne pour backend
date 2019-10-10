@@ -1,0 +1,33 @@
+POUR LES TEST COTE BACKEND
+
+
+pour lancer l'app = npm run start (faire en 1er)
+pour la tester = npm run api.test (faire en 2ème) va executer ce qu'il y a dans collection.json
+	envoie une commande avec "newman" (outil qui execute les collections que postaman produit)
+
+dans vscode, aller dans test/api/collection.json
+	contient les paramètre de nos tests
+	le but est de l'importer de contenu de collection.json (qui contient nos test) dans postman
+	methode = ouvrir postman, fichier/importer/Text/=> copier coller le contenu de collection.json
+
+Quand on créer une nouvelle fonctionalité côté back, bonne pratique est de commencer par le test d'API (sur postman)
+
+Ne pas oublier d'exporter avant de pusher => go postman/export/mon_folder/test/api/remplacer collection.json = OK
+Dès lors les tests qu'on a développer sur postman sont exporter dans notre folder. Ils seront pris en compte par npm
+
+-----------------------------------------------
+SCENARIO BACKEND
+
+1. afficher liste de tous les jetpacks
+2. créer/ajouter un jetpack (POST)
+3. voir 1 jetpack (with id)
+4. modifier un jetpack (PUT)
+5. recherche de disponibilité (sur une période)
+6. faire une réservation 
+	A. création class "reservation" avec id de jetpack
+		id reservation
+		id jetpack
+		date début
+		date fin
+	B. ajouter attribut date directement dans les jetpacks
+7. 
