@@ -9,6 +9,10 @@ module.exports = function(config) {
     thresholds: {
       break: 20
       // ..
-    }
+    },
+    files: [
+      'src/**/**.js',
+      '!src/Db.js',
+    ],
   });
 };
