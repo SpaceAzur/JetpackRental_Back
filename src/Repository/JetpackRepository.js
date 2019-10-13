@@ -17,4 +17,13 @@ module.exports = class {
             .push(jetpack.toJson())
             .write()
     }
+
+    getById(jetId, db) {    
+        const tata = db.get('jetpacks').find( c => c.id == jetId);
+        return tata;    
+    }
+
+    getAll(db) {
+        return db.get('jetpacks');
+    }
 };
