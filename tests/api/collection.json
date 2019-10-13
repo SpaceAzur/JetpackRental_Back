@@ -1,69 +1,190 @@
 {
-  "info": {
-    "_postman_id": "db66848b-13cc-4d8d-add7-ce6d33d67965",
-    "name": "Ensiie Test Back",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "Create a Jet Pack",
-      "event": [
-        {
-          "listen": "prerequest",
-          "script": {
-            "id": "29cc937c-0294-49cd-ba3e-31f7b5f41eac",
-            "exec": [
-              "pm.globals.set('url', 'http://localhost:3000')"
-            ],
-            "type": "text/javascript"
-          }
-        },
-        {
-          "listen": "test",
-          "script": {
-            "id": "4cffee8b-566b-4c46-aa99-e2b76d4487bc",
-            "exec": [
-              "pm.test(\"Status code is 201\", function () {",
-              "    pm.response.to.have.status(201);",
-              "});",
-              "",
-              "pm.test(\"Json bdy has information\", function () {",
-              "    var jsonData = pm.response.json();",
-              "    pm.expect(jsonData.name).to.eql(\"Jet Pack à fusion X98371\");",
-              "    pm.expect(jsonData.image).to.eql(\"Base 64 ...\");",
-              "    pm.globals.set('jetpack.id', jsonData.id)",
-              "});"
-            ],
-            "type": "text/javascript"
-          }
-        }
-      ],
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "name": "Content-Type",
-            "value": "application/json",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n\t\"name\":\"Jet Pack à fusion X98371\",\n\t\"image\": \"Base 64 ...\"\n}"
-        },
-        "url": {
-          "raw": "{{url}}/jetpacks",
-          "host": [
-            "{{url}}"
-          ],
-          "path": [
-            "jetpacks"
-          ]
-        }
-      },
-      "response": []
-    }
-  ],
-  "protocolProfileBehavior": {}
+	"info": {
+		"_postman_id": "f9c47433-dad6-4591-ae15-a31109ba8b0d",
+		"name": "Ensiie Test Back",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create a Jet Pack",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "29cc937c-0294-49cd-ba3e-31f7b5f41eac",
+						"exec": [
+							"pm.globals.set('url', 'http://localhost:3000')"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "4cffee8b-566b-4c46-aa99-e2b76d4487bc",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Json bdy has information\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(\"Jet Pack à fusion X98371\");",
+							"    pm.expect(jsonData.image).to.eql(\"Base 64 ...\");",
+							"    pm.globals.set('jetpack.id', jsonData.id)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"Jet Pack à fusion X98371\",\n\t\"image\": \"Base 64 ...\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}/jetpacks",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"jetpacks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get liste Jet Pack",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7d45590f-5d15-42b7-ab60-51e219258753",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// Test que le premier élément de la liste est notre ",
+							"pm.test(\"Json bdy has information\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData[0].name).to.eql(\"Jet Pack à fusion X98371\");",
+							"    pm.expect(jsonData[0].image).to.eql(\"Base 64 ...\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "afe4f7ba-0cdf-4af3-83b2-bc60f045fa6f",
+						"exec": [
+							"pm.globals.set('url', 'http://localhost:3000')"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/jetpacks",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"jetpacks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Jet Pack by ID",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "29cc937c-0294-49cd-ba3e-31f7b5f41eac",
+						"exec": [
+							"pm.globals.set('url', 'http://localhost:3000')"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "4cffee8b-566b-4c46-aa99-e2b76d4487bc",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Json bdy has information\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(\"Jet Pack à fusion X98371\");",
+							"    pm.expect(jsonData.image).to.eql(\"Base 64 ...\");",
+							"    pm.globals.set('jetpack.id', jsonData.id)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"Jet Pack à fusion X98371\",\n\t\"image\": \"Base 64 ...\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}/jetpacks",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"jetpacks"
+					]
+				}
+			},
+			"response": []
+		}
+	]
 }
