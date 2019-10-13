@@ -58,22 +58,78 @@ describe('Jetpack Repository create', function () {
 });
 
 describe('Jetpack repository getAll', function () {
-  const dbMock = {
-    get : jest.fn().mockReturnThis(),
-    value : jest.fn().mockReturnValue([
-      {id:1, name:"jetpack1", image:"image_jetpack1.img"},
-      {id:2, name:"jetpack2", image:"image_jetpack2.img"}
-    ])
-  };
-  const repository = new JetpackRepository(dbMock);
+  test('Get all the 2 jetpacks => OK', () => {
+    const dbMock = {
+      get: jest.fn().mockReturnThis(),
+      value: jest.fn().mockReturnValue([
+        {id: 1, name: "jetpack1", image: "image_jetpack1.img"},
+        {id: 2, name: "jetpack2", image: "image_jetpack2.img"}
+      ])
+    };
+    const repository = new JetpackRepository(dbMock);
 
-  expect(repository.getAll()).toEqual(
-    [{ id: 1,
-      name: 'jetpack1',
-      image: 'image_jetpack1.img'
-    },
-      { id: 2,
-        name: 'jetpack2',
-        image: 'image_jetpack2.img'
-      }]);
+    expect(repository.getAll()).toEqual(
+      [
+        {id: 1, name: 'jetpack1', image: 'image_jetpack1.img'},
+        {id: 2, name: 'jetpack2', image: 'image_jetpack2.img'}
+        ]
+    );
+  });
+
+  test('Get all empty jetpack list => empty list', () => {
+    const dbMock = {
+      get: jest.fn().mockReturnThis(),
+      value: jest.fn().mockReturnValue([])
+    };
+    const repository = new JetpackRepository(dbMock);
+
+    expect(repository.getAll()).toEqual([]);
+  });
+});
+
+describe('Jetpack repository getJetpackById', function () {
+  test('Get jetpack by ID 1 => Return the Jetpack', () => {
+    const dbMock = {
+      get: jest.fn().mockReturnThis(),
+      find: jest.fn().mockReturnThis(),
+      value: jest.fn().mockReturnValue([
+        {id: 1, name: "jetpack1", image: "image_jetpack1.img"}
+      ])
+    };
+    const repository = new JetpackRepository(dbMock);
+
+    expect(repository.getJetpackById(1)).toEqual(
+      [{
+        id: 1,
+        name: 'jetpack1',
+        image: 'image_jetpack1.img'
+      }]
+    );
+  });
+
+  test('Get jetpack by non unique ID 1 => Return all the Jetpack of ID 1', () => {
+    const dbMock = {
+      get: jest.fn().mockReturnThis(),
+      find: jest.fn().mockReturnThis(),
+      value: jest.fn().mockReturnValue([
+        {id: 1, name: "jetpack1", image: "image_jetpack1.img"},
+        {id: 1, name: "jetpack1bis", image: "image_jetpack1bis.img"}
+      ])
+    };
+    const repository = new JetpackRepository(dbMock);
+
+    expect(repository.getJetpackById(1)).toEqual(
+      [
+        {id: 1, name: 'jetpack1', image: 'image_jetpack1.img'},
+        {id: 1, name: 'jetpack1bis', image: 'image_jetpack1bis.img'}
+      ]
+    );
+  });
+
+  test('Get jetpack without ID => throw "Unable to search empty jetpack ID"', () => {
+    const repository = new JetpackRepository();
+
+    expect(() => {repository.getJetpackById()})
+      .toThrow('Unable to search empty jetpack ID');
+  });
 });
