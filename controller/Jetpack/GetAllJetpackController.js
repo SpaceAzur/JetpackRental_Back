@@ -5,6 +5,6 @@ const JetpackRepository = require('../../src/Repository/JetpackRepository');
 module.exports = (req, res) => {
     const id = req.params.id;
     let jetpackRepository = new JetpackRepository();
-    let result = jetpackRepository.getById(id, db)
+    let result = jetpackRepository.getAll(db)
     res.send(result);
 };
