@@ -53,12 +53,13 @@
 					"raw": "{\n\t\"name\":\"Jet Pack à fusion X98371\",\n\t\"image\": \"Base 64 ...\"\n}"
 				},
 				"url": {
-					"raw": "{{url}}/jetpacks",
+					"raw": "{{url}}/jetpacks/create",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"jetpacks"
+						"jetpacks",
+						"create"
 					]
 				}
 			},
@@ -145,8 +146,8 @@
 					"script": {
 						"id": "4cffee8b-566b-4c46-aa99-e2b76d4487bc",
 						"exec": [
-							"pm.test(\"Status code is 201\", function () {",
-							"    pm.response.to.have.status(201);",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
 							"});",
 							"",
 							"pm.test(\"Json bdy has information\", function () {",
@@ -160,14 +161,17 @@
 					}
 				}
 			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
+						"type": "text",
+						"value": "application/json"
 					}
 				],
 				"body": {
@@ -175,12 +179,13 @@
 					"raw": "{\n\t\"name\":\"Jet Pack à fusion X98371\",\n\t\"image\": \"Base 64 ...\"\n}"
 				},
 				"url": {
-					"raw": "{{url}}/jetpacks",
+					"raw": "{{url}}/jetpacks/1689ab98-eeb7-4ff4-9db2-bd141683c1e4",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"jetpacks"
+						"jetpacks",
+						"1689ab98-eeb7-4ff4-9db2-bd141683c1e4"
 					]
 				}
 			},

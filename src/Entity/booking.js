@@ -1,5 +1,3 @@
-const 
-
 module.exports = class {
     constructor() {
         this._id = null;
@@ -39,10 +37,5 @@ module.exports = class {
     setEndDate(value) {
         this._EndDate = value;
     }
-
-    
-
-
-
 
 }
