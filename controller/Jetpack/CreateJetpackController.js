@@ -4,7 +4,7 @@ const db = require('../../src/Db');
 const JetpackRepository = require('../../src/Repository/JetpackRepository');
 
 module.exports = (req, res) => {
-console.log(req.body);
+    console.log(req.body);
     let jetpack = new Jetpack();
     jetpack.id = uuidv4();
     jetpack.name = req.body.name;

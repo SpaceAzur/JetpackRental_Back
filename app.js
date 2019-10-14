@@ -4,14 +4,11 @@ let app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json())
 
-app
-    .route('/jetpacks/:id?')
-    .get(require('./controller/Jetpack/GetJetpackController'))
-    .post(require('./controller/Jetpack/CreateJetpackController'));
+//.route('/jetpacks/:id?')
+app.get('/jetpacks/:id?', require('./controller/Jetpack/GetJetpackController'));
+app.post('/jetpacks/create', require('./controller/Jetpack/CreateJetpackController'));
 
-app
-    .route('/bookings/')
-    .get(require('./controller/Booking/GetBookingController'));
+app.get('/bookings/', require('./controller/Booking/GetBookingController'));
 
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!')
