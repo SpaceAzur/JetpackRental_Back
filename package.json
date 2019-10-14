@@ -36,7 +36,6 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",
-    "fetchers": "^0.2.1",
     "install": "^0.12.2",
     "lowdb": "^1.0.0",
     "newman": "^4.4.1",
