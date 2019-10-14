@@ -4,6 +4,9 @@ const JetpackRepository = require('../../src/Repository/JetpackRepository');
 module.exports = (req, res) => {
   var my_id = req.params.id;
 
+  // Pour utiliser les parametres definis par un ? dans l'URL
+  //let my_id = req.query.id;
+
   //console.log('id ' + my_id);
   if (my_id === undefined){
     console.log('Recuperation de la liste des jetpacks')
