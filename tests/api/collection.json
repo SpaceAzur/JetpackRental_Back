@@ -78,12 +78,13 @@
 							"});",
 							"",
 							"// Test que le premier élément de la liste est notre ",
-							"pm.test(\"Json bdy has information\", function () {",
+							"pm.test(\"Get list Jetpacks: Json bdy has information\", function () {",
 							"    var jsonData = pm.response.json();",
 							"    ",
 							"    pm.expect(jsonData[0].name).to.eql(\"Jet Pack à fusion X98371\");",
 							"    pm.expect(jsonData[0].image).to.eql(\"Base 64 ...\");",
-							"});"
+							"});",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -150,11 +151,10 @@
 							"    pm.response.to.have.status(200);",
 							"});",
 							"",
-							"pm.test(\"Json bdy has information\", function () {",
+							"pm.test(\"Get Jetpack by ID: Json bdy has information\", function () {",
 							"    var jsonData = pm.response.json();",
 							"    pm.expect(jsonData.name).to.eql(\"Jet Pack à fusion X98371\");",
 							"    pm.expect(jsonData.image).to.eql(\"Base 64 ...\");",
-							"    pm.globals.set('jetpack.id', jsonData.id)",
 							"});"
 						],
 						"type": "text/javascript"
@@ -179,13 +179,13 @@
 					"raw": "{\n\t\"name\":\"Jet Pack à fusion X98371\",\n\t\"image\": \"Base 64 ...\"\n}"
 				},
 				"url": {
-					"raw": "{{url}}/jetpacks/1689ab98-eeb7-4ff4-9db2-bd141683c1e4",
+					"raw": "{{url}}/jetpacks/{{jetpack.id}}",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
 						"jetpacks",
-						"1689ab98-eeb7-4ff4-9db2-bd141683c1e4"
+						"{{jetpack.id}}"
 					]
 				}
 			},
