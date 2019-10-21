@@ -192,6 +192,67 @@
 			"response": []
 		},
 		{
+			"name": "Create a booking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b70a517-8da6-4e76-8036-0c5aa0372a49",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Json bdy has information\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.jetpackId).to.eql( \"11\" );",
+							"    pm.expect(jsonData.start_date).to.eql(\"2019-09-01\");",
+							"    pm.expect(jsonData.end_date).to.eql(\"2019-12-31\");",
+							"    pm.globals.set('booking.id', jsonData.id)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "fe17d202-c97e-451a-a76f-50e34fda79d9",
+						"exec": [
+							"pm.globals.set('url', 'http://localhost:3000')"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"jetpackId\": \"11\",\n\t\"start_date\": \"2019-09-01\",\n\t\"end_date\": \"2019-12-31\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}/bookings/create",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"bookings",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get liste bookings",
 			"event": [
 				{
@@ -215,7 +276,11 @@
 							"",
 							"// Test que le premier élément de la liste est notre booking",
 							"pm.test(\"Get list Jetpacks: Json bdy has information\", function () {",
-							"   ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData[0].jetpackId).to.eql(\"11\");",
+							"    pm.expect(jsonData[0].start_date).to.eql(\"2019-09-01\");",
+							"    pm.expect(jsonData[0].end_date).to.eql(\"2019-12-31\");",
 							"});",
 							""
 						],
