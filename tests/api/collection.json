@@ -190,6 +190,67 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Get liste bookings",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9a4a0969-9e08-40c9-8a5b-e8eb18e2e26c",
+						"exec": [
+							"pm.globals.set('url', 'http://localhost:3000')"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "783cca14-ba85-4daa-b49a-15a4c0799288",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// Test que le premier élément de la liste est notre booking",
+							"pm.test(\"Get list Jetpacks: Json bdy has information\", function () {",
+							"   ",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/bookings",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"bookings"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

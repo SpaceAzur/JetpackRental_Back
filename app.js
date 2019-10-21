@@ -8,7 +8,7 @@ app.use(bodyParser.json())
 app.get('/jetpacks/:id?', require('./controller/Jetpack/GetJetpackController'));
 app.post('/jetpacks/create', require('./controller/Jetpack/CreateJetpackController'));
 
-app.get('/bookings/', require('./controller/Booking/GetBookingController'));
+app.get('/bookings/:id?', require('./controller/Booking/GetBookingController'));
 
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!')
