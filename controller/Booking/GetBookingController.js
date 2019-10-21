@@ -1,4 +1,26 @@
+const  Booking = require("../../src/Entity/booking");
+const uuidv4 = require('uuid/v4');
+const db = require('../../src/Db');
+const BookingRepository = require('../../src/Repository/bookingRepository');
+
 module.exports = (req, res) => {
-  var id = req.params.id;
-  res.send('Booking feature not implemented');
+  // Recuperation des parametres
+  let id_booking = req.params.id;
+  let id_jetpack = req.params.jetpackId;
+  let date_debut = req.params.start_date;
+  let date_fin = req.params.end_date;
+
+  //Pas d'id en parametre => On affiche la liste des reservations
+  if(id_booking === undefined){
+    console.log('Recuperation de la liste des bookings');
+    const repo = new BookingRepository(db);
+    let bookings = repo.getAllBookings();
+    res.header("Access-Control-Allow-Origin", "*");
+    res.status(200).send(bookings)
+  } else {
+    console.log('Recuperation booking id: ' + id_booking);
+    const repo = new BookingRepository(db);
+    let booking = repo.getBookingById(id_booking);
+    res.status(200).send(booking);
+  }
 };

@@ -190,6 +190,21 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Get liste bookings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
 		}
 	]
 }

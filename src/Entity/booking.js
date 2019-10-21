@@ -2,40 +2,48 @@ module.exports = class {
     constructor() {
         this._id = null;
         this._jetpackId = null;
-        this._StartDate = null;
-        this._EndDate = null;
+        this._start_date = null;
+        this._end_date = null;
     }
 
-    getId() {
+    get id() {
         return this._id;
     }
 
-    getJetpackId() {
+    get jetpackId() {
         return this._jetpackId;
     }
 
-    getStartDate() {
-        return this._StartDate;
+    get start_date() {
+        return this._start_date;
     }
 
-    getEndDate() {
-        return this._EndDate;
+    get end_date() {
+        return this._end_date;
     }
 
-    setId(value) {
+    set id(value) {
         this._id = value;
     }
 
-    setJetpackId(value) {
+    set jetpackId(value) {
         this._jetpackId = value;
     }
 
-    setStarDate(value) {
-        this._StartDate = value;
+    set start_date(value) {
+        this._start_date = value;
     }
 
-    setEndDate(value) {
-        this._EndDate = value;
+    set end_date(value) {
+        this._end_date = value;
     }
 
+    toJson() {
+      return {
+        id : this.id,
+        jetpackId : this.jetpackId,
+        start_date: this.start_date,
+        end_date: this.end_date
+      }
+    }
 }
