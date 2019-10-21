@@ -9,6 +9,7 @@ app.get('/jetpacks/:id?', require('./controller/Jetpack/GetJetpackController'));
 app.post('/jetpacks/create', require('./controller/Jetpack/CreateJetpackController'));
 
 app.get('/bookings/:id?', require('./controller/Booking/GetBookingController'));
+app.post('/bookings/create', require('./controller/Booking/CreateBookingController'));
 
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!')
