@@ -133,3 +133,24 @@ describe('Jetpack repository getJetpackById', function () {
       .toThrow('Unable to search empty jetpack ID');
   });
 });
+
+describe('Jetpack repository getJetpacksAvailable', function () {
+  test('Get jetpack available => Return the Jetpack', () => {
+    const dbMock = {
+      get: jest.fn().mockReturnThis(),
+      find: jest.fn().mockReturnThis(),
+      value: jest.fn().mockReturnValue([
+        {id: 1, name: "jetpack1", image: "image_jetpack1.img"}
+      ])
+    };
+    const repository = new JetpackRepository(dbMock);
+
+    expect(repository.getJetpackById(1)).toEqual(
+      [{
+        id: 1,
+        name: 'jetpack1',
+        image: 'image_jetpack1.img'
+      }]
+    );
+  });
+});

@@ -7,6 +7,7 @@ app.use(bodyParser.json())
 //.route('/jetpacks/:id?')
 app.get('/jetpacks/:id?', require('./controller/Jetpack/GetJetpackController'));
 app.post('/jetpacks/create', require('./controller/Jetpack/CreateJetpackController'));
+app.get('/jetpacks/:start_date/:end_date', require('./controller/Jetpack/GetJetpackController'));
 
 app.get('/bookings/:id?', require('./controller/Booking/GetBookingController'));
 app.post('/bookings/create', require('./controller/Booking/CreateBookingController'));
