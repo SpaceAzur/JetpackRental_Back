@@ -203,9 +203,10 @@
 							"    pm.response.to.have.status(201);",
 							"});",
 							"",
-							"pm.test(\"Json bdy has information\", function () {",
+							"pm.test(\"Create booking: Json bdy has information\", function () {",
 							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.jetpackId).to.eql( \"11\" );",
+							"    ",
+							"    pm.expect(jsonData.jetpackId).to.eql( pm.globals.get(\"jetpack.id\") );",
 							"    pm.expect(jsonData.start_date).to.eql(\"2019-09-01\");",
 							"    pm.expect(jsonData.end_date).to.eql(\"2019-12-31\");",
 							"    pm.globals.set('booking.id', jsonData.id)",
@@ -237,7 +238,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"jetpackId\": \"11\",\n\t\"start_date\": \"2019-09-01\",\n\t\"end_date\": \"2019-12-31\"\n}"
+					"raw": "{\n\t\"jetpackId\": \"{{jetpack.id}}\",\n\t\"start_date\": \"2019-09-01\",\n\t\"end_date\": \"2019-12-31\"\n}"
 				},
 				"url": {
 					"raw": "{{url}}/bookings/create",
@@ -275,10 +276,10 @@
 							"});",
 							"",
 							"// Test que le premier élément de la liste est notre booking",
-							"pm.test(\"Get list Jetpacks: Json bdy has information\", function () {",
+							"pm.test(\"Get list Bookings: Json bdy has information\", function () {",
 							"    var jsonData = pm.response.json();",
 							"    ",
-							"    pm.expect(jsonData[0].jetpackId).to.eql(\"11\");",
+							"    pm.expect(jsonData[0].jetpackId).to.be.an('string').that.is.not.empty ;",
 							"    pm.expect(jsonData[0].start_date).to.eql(\"2019-09-01\");",
 							"    pm.expect(jsonData[0].end_date).to.eql(\"2019-12-31\");",
 							"});",
@@ -312,6 +313,70 @@
 					],
 					"path": [
 						"bookings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get jetpacks available",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "72256269-0f53-4da3-a96c-aa020818de1f",
+						"exec": [
+							"pm.globals.set('url', 'http://localhost:3000')"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "542c0936-162f-4919-a977-00bbe4925f2c",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Get Jetpacks available: Json bdy has information\", function () {",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    pm.expect(jsonData[0].name).to.eql(\"Jet Pack à fusion X98371\");",
+							"    pm.expect(jsonData[0].image).to.eql(\"Base 64 ...\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/jetpacks/2019-01-01/2019-03-31",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"jetpacks",
+						"2019-01-01",
+						"2019-03-31"
 					]
 				}
 			},

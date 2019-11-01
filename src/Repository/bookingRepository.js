@@ -32,23 +32,26 @@ module.exports = class {
   getBookingById(idToSearch){}
 
   isJetpackAvailable(idJetpack, from, to){
-    if(idJetpack) {
-      console.log("Recherche du jetpack " + idJetpack)
+    if(idJetpack !== undefined) {
+      //console.log("Recherche du jetpack " + idJetpack);
       // On recherche l'id du jetpack dans les bookings
       let booking_containing_jetpack = this.db.get('bookings')
         .find(({jetpackId: idJetpack}))
         .value();
 
-      console.log("booking_containing_jetpack: " + booking_containing_jetpack)
+      //console.log("booking_containing_jetpack: " + booking_containing_jetpack);
 
       // Si on le trouve, on regarde si les dates de dispo s'overlapsent avec le booking déjà existant
       // Si oui, alors il n'est pas dispo aux dates demandées, on retourne false
       // Si non, il est dispo, on retourne true
-      if(booking_containing_jetpack) {
+      if(booking_containing_jetpack !== undefined) {
         return !this.overlaps(
           booking_containing_jetpack.start_date, booking_containing_jetpack.end_date,
           from, to
         );
+      } else {
+        // Si le jetpack n'apparait dans aucune reservation, il est disponible
+        return true;
       }
     } else {
       throw 'Unable to search a jetpack in bookings whithout id';

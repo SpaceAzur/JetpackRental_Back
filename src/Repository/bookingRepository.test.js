@@ -66,4 +66,99 @@ describe('Get all Bookings', function () {
       {id: 2, jetpackId: "12", start_date: "2019-09-01", end_date: "2019-12-31"}
     ])
   });
+
+  test('Get all booking => None', () => {
+    const dbMock = {
+      get : jest.fn().mockReturnThis(),
+      value: jest.fn().mockReturnValue([])
+    };
+    const repository = new BookingRepository(dbMock);
+
+    expect(repository.getAllBookings()).toEqual([])
+  });
+});
+
+describe('Get Booking by ID', function () {
+  test('Get booking => OK', () => {
+  });
+});
+
+describe('Check is jetpack available', function () {
+  test('isJetpackAvailable => OK', () => {
+    const dbMock = {
+      get: jest.fn().mockReturnThis(),
+      find: jest.fn().mockReturnThis(),
+      value: jest.fn().mockReturnValue([
+        {id: 1, jetpackId: "11", start_date: "2019-09-01", end_date: "2019-12-31"}
+      ])
+    };
+    const repository = new BookingRepository(dbMock);
+
+    expect(repository.isJetpackAvailable("11", "2019-01-01", "2019-03-01"))
+      .toEqual(true)
+  });
+
+  test('isJetpackAvailable without jetpackId => throw Unable to search a jetpack in bookings whithout id', () => {
+    const dbMock = {
+      get: jest.fn().mockReturnThis(),
+      find: jest.fn().mockReturnThis(),
+      value: jest.fn().mockReturnThis()
+    };
+    const repository = new BookingRepository(dbMock);
+
+    expect(() => {
+      repository.isJetpackAvailable(
+        undefined,
+        "2019-09-01",
+        "2019-12-31"
+      )
+    }).toThrow('Unable to search a jetpack in bookings whithout id');
+
+  });
+
+  test('Jetpack not booked already => return true (jetpack available)', () => {
+    const dbMock = {
+      get: jest.fn().mockReturnThis(),
+      find: jest.fn().mockReturnThis(),
+      value: jest.fn().mockReturnValue(undefined) // Verifier que value renoie un objet vide si n'a pas trouvé
+    };
+    const repository = new BookingRepository(dbMock);
+
+    expect(repository.isJetpackAvailable("11", "2019-01-01", "2019-03-01"))
+      .toEqual(true)
+  });
+});
+
+describe('Overlapse booking interval', function () {
+  test('Test overlapsed intervals => true', () => {
+    const repository = new BookingRepository();
+    expect(repository.overlaps(
+      "2019-09-01",
+      "2019-12-31",
+      "2019-09-01",
+      "2019-12-31"
+    ))
+      .toBe(true);
+  });
+
+  test('Test non overlapsed intervals => false', () => {
+    const repository = new BookingRepository();
+    expect(repository.overlaps(
+      "2019-01-01",
+      "2019-03-31",
+      "2019-09-01",
+      "2019-12-31"
+    ))
+      .toBe(false);
+  });
+});
+
+describe('Update Booking', function () {
+  test('Update booking => OK', () => {
+  });
+});
+
+describe('Delete Booking', function () {
+  test('Delete booking => OK', () => {
+  });
 });

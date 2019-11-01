@@ -1,4 +1,5 @@
 node_modules
+.stryker-tmp
 package-lock.json
 .idea
 coverage

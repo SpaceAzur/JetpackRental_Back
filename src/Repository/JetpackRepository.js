@@ -1,5 +1,4 @@
-const BookingRepository = require('../Repository/bookingRepository')
-const db = require('../../src/Db');
+const BookingRepository = require('../Repository/bookingRepository');
 
 module.exports = class {
   constructor(db) {
