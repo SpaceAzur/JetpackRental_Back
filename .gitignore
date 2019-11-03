@@ -1,7 +1,9 @@
 node_modules
+.stryker-tmp
 package-lock.json
 .idea
 coverage
 npm-debug.log
 reports
 db.json
+stryker.log

@@ -133,3 +133,71 @@ describe('Jetpack repository getJetpackById', function () {
       .toThrow('Unable to search empty jetpack ID');
   });
 });
+
+describe('Jetpack repository getJetpacksAvailable', function () {
+  test('Get jetpack available => Return the Jetpack', () => {
+    const dbMock = {
+      get: jest.fn().mockReturnThis(),
+      find: jest.fn().mockReturnThis(),
+      value: jest.fn().mockReturnValue([
+        {id: 1, name: "jetpack1", image: "image_jetpack1.img"},
+        {id: 2, name: "jetpack2", image: "image_jetpack2.img"}
+      ])
+    };
+    const repository = new JetpackRepository(dbMock);
+
+    expect(repository.getJetpacksAvailable("2019-01-01", "2019-03-01")).toEqual(
+      [{
+
+        id: 1,
+        name: 'jetpack1',
+        image: 'image_jetpack1.img'
+      },
+      {
+        id: 2,
+        name: 'jetpack2',
+        image: 'image_jetpack2.img'
+      }]
+    );
+  });
+
+  test('Get jetpack without dates => throw \"You have to choose start and end dates\"', () => {
+    const repository = new JetpackRepository();
+
+    expect(() => {repository.getJetpacksAvailable()})
+      .toThrow('You have to choose start and end dates');
+  });
+
+  test('Get jetpack with 1 date => throw \"You have to choose start and end dates\"', () => {
+    const repository = new JetpackRepository();
+
+    expect(() => {repository.getJetpacksAvailable("2019-01-01")})
+      .toThrow('You have to choose start and end dates');
+  });
+
+  test('Get jetpack with inverted dates => throw \"The end date cannot be anterior to start date!\"', () => {
+    const repository = new JetpackRepository();
+
+    expect(() => {repository.getJetpacksAvailable("2019-03-01", "2019-01-01")})
+      .toThrow('The end date cannot be anterior to start date!');
+  });
+
+  test('Get jetpack available => Return the Jetpack', () => {
+    const dbMock = {
+      get: jest.fn().mockReturnThis(),
+      find: jest.fn().mockReturnThis(),
+      value: jest.fn().mockReturnValue([
+        {id: 1, name: "jetpack1", image: "image_jetpack1.img"}
+      ])
+    };
+    const repository = new JetpackRepository(dbMock);
+
+    expect(repository.getJetpacksAvailable("2019-01-01", "2019-03-01")).toEqual(
+      [{
+        id: 1,
+        name: 'jetpack1',
+        image: 'image_jetpack1.img'
+      }]
+    );
+  });
+});
