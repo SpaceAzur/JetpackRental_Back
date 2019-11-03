@@ -57,7 +57,7 @@ module.exports = class {
         throw 'The end date cannot be anterior to start date!';
       }
     } else {
-      return null;
+      throw 'You have to choose start and end dates';
     }
   }
 };
