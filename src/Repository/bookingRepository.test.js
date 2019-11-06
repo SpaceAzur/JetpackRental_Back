@@ -160,5 +160,45 @@ describe('Update Booking', function () {
 
 describe('Delete Booking', function () {
   test('Delete booking => OK', () => {
+    const dbMock_preDelete = {
+      get: jest.fn().mockReturnThis(),
+      find: jest.fn().mockReturnThis(),
+      value: jest.fn().mockReturnValue([
+        {id: "1", jetpackId: "11", start_date: "2019-09-01", end_date: "2019-12-31"}
+      ]),
+      remove: jest.fn().mockReturnThis(),
+      write: jest.fn().mockReturnThis()
+    };
+    const dbMock_postDelete = {
+      get: jest.fn().mockReturnThis(),
+      find: jest.fn().mockReturnThis(),
+      value: jest.fn().mockReturnValue(null)
+    };
+
+    // Suppression du booking
+    const repository = new BookingRepository(dbMock_preDelete);
+    repository.deleteBooking("1")
+    // Verification de la suppression
+    const repo2 = new BookingRepository((dbMock_postDelete))
+    expect(repo2.getBookingById("1")).toBe(null)
+  });
+
+  test('Delete booking without id => throw "Unable to delete a booking whithout id"', () => {
+    const repository = new BookingRepository();
+    expect(() => {
+      repository.deleteBooking(undefined)
+    }).toThrow('Unable to delete a booking whithout id');
+  });
+
+  test('Delete non existing booking => throw "Unable to delete an unknown booking"', () => {
+    const dbMock = {
+      get: jest.fn().mockReturnThis(),
+      find: jest.fn().mockReturnThis(),
+      value: jest.fn().mockReturnValue(undefined)
+    };
+    const repository = new BookingRepository(dbMock);
+    expect(() => {
+      repository.deleteBooking("1")
+    }).toThrow('Unable to delete an unknown booking');
   });
 });
