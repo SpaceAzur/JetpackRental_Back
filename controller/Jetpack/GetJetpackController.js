@@ -19,7 +19,7 @@ module.exports = (req, res) => {
     const repository = new JetpackRepository(db);
     let jetpacks = repository.getAll();
     res.header("Access-Control-Allow-Origin", "*");
-    res.status(200).send(jetpacks)
+    res.status(200).send(jetpacks);
 
   } else if (my_id === undefined &&
             startDate &&
@@ -29,15 +29,25 @@ module.exports = (req, res) => {
       "sur la periode du " + startDate + " au " + endDate);
 
     const repository = new JetpackRepository(db);
-    let jetpacksAvailable = repository.getJetpacksAvailable(startDate, endDate);
-    console.log("Liste jetpacks dispos du " + startDate + " au " + endDate + " : " + jetpacksAvailable);
-    res.status(200).send(jetpacksAvailable);
+    try {
+      let jetpacksAvailable = repository.getJetpacksAvailable(startDate, endDate);
+      res.status(200).send(jetpacksAvailable);
+    } catch (e) {
+      res.header("Access-Control-Allow-Origin", "*");
+      res.status(424).send(e);
+    }
 
   } else {
     console.log('Recuperation jetpack id: ' + my_id);
     const repository = new JetpackRepository(db);
-    let jetpack = repository.getJetpackById(my_id);
-    res.status(200).send(jetpack)
+    try {
+      let jetpack = repository.getJetpackById(my_id);
+      res.header("Access-Control-Allow-Origin", "*");
+      res.status(200).send(jetpack)
+    } catch (e) {
+      res.header("Access-Control-Allow-Origin", "*");
+      res.status(424).send(e)
+    }
   }
 
 };
