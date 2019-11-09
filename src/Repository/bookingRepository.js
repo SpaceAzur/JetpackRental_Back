@@ -29,7 +29,30 @@ module.exports = class {
       .value();
   }
 
-  getBookingById(idToSearch){}
+  getBookingById(idToSearch){
+    if(!idToSearch){
+      throw "id is missing";
+    } 
+    let currentBooking = this.db
+      .get('bookings')
+      .find(({id: idToSearch}))
+      .value();
+    
+    if(currentBooking !== null || currentBooking !== undefined) {
+      return currentBooking;
+    }
+  }
+
+  // getBookingById2(idToSearch){
+  //   if(idToSearch) {
+  //     return this.db
+  //     .get('bookings')
+  //     .find(({id: idToSearch}))
+  //     .value();
+  //   } else {
+  //     throw "this booking doesn't exist";
+  //   }
+  // }
 
   isJetpackAvailable(idJetpack, from, to){
     if(idJetpack !== undefined) {
@@ -88,7 +111,15 @@ module.exports = class {
     return to1 > from2 && from1 < to2;
   }
 
-  updateBooking(idBooking){}
+  updateBooking(idBooking){
+    // tester que idBooking different de vide
+    if(idBooking === null){
+      return "id is missing"
+    }
+    // tester existence de l'idBooking dans db
+    
+
+  }
 
   deleteBooking(idBooking){}
 

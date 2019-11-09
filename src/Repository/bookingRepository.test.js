@@ -80,8 +80,35 @@ describe('Get all Bookings', function () {
 
 describe('Get Booking by ID', function () {
   test('Get booking => OK', () => {
+    const dbMock = {
+      get: jest.fn().mockReturnThis(),
+      find: jest.fn().mockReturnThis(),
+      value: jest.fn().mockReturnValue([
+        { id: "rg456kj", 
+          jetpackId: "jetpack1", 
+          start_date: "2019-09-01",
+          end_date: "2019-12-31"
+        }
+      ])
+    };
+    const repository = new BookingRepository(dbMock);
+    expect(repository.getBookingById("rg456kj")).toEqual(
+        [{ id: "rg456kj", 
+          jetpackId: "jetpack1", 
+          start_date: "2019-09-01",
+          end_date: "2019-12-31"
+        }]
+      );
+    });
+  
+  test("get booking by Id => No id received in function", () => {
+    let dbMock = {};
+    let repository = new BookingRepository(dbMock);
+    expect(()=>{repository.getBookingById()}).toThrow("id is missing");  
   });
+
 });
+
 
 describe('Check is jetpack available', function () {
   test('isJetpackAvailable => OK', () => {
