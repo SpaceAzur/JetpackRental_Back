@@ -182,6 +182,41 @@ describe('Overlapse booking interval', function () {
 
 describe('Update Booking', function () {
   test('Update booking => OK', () => {
+  //   const previous_dbMock = {
+  //   get: jest.fn().mockReturnThis(),
+  //   find: jest.fn().mockReturnThis(),
+  //   value: jest.fn().mockReturnValue([
+  //     { id: "rg456kj", 
+  //       jetpackId: "jetpack1", 
+  //       start_date: "2019-09-01",
+  //       end_date: "2019-12-31"
+  //     }])
+  //   };
+  //   const new_dbMock = {
+  //     get: jest.fn().mockReturnThis(),
+  //     assign: jest.fn().mockReturnThis(),
+  //     write: jest.fn().mockReturnValue([
+  //       { id: "rg456kj", 
+  //         jetpackId: "jetpack38", 
+  //         start_date: "2019-09-01",
+  //         end_date: "2019-12-31"
+  //       }])
+  //   };
+
+  //   let repository1 = new BookingRepository(previous_dbMock);
+  //   let repository2 = new BookingRepository(new_dbMock);
+
+  //   expect(repository2.updateBooking(
+  //     { id: "rg456kj", 
+  //       jetpackId: "jetpack38", 
+  //       start_date: "2019-09-01",
+  //       end_date: "2019-12-31"
+  //   })).toEqual(
+  //     { id: "rg456kj", 
+  //       jetpackId: "jetpack38", 
+  //       start_date: "2019-09-01",
+  //       end_date: "2019-12-31"
+  //     });
   });
 });
 

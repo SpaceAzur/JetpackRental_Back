@@ -43,17 +43,6 @@ module.exports = class {
     }
   }
 
-  // getBookingById2(idToSearch){
-  //   if(idToSearch) {
-  //     return this.db
-  //     .get('bookings')
-  //     .find(({id: idToSearch}))
-  //     .value();
-  //   } else {
-  //     throw "this booking doesn't exist";
-  //   }
-  // }
-
   isJetpackAvailable(idJetpack, from, to){
     if(idJetpack !== undefined) {
       //console.log("Recherche du jetpack " + idJetpack);
@@ -111,16 +100,30 @@ module.exports = class {
     return to1 > from2 && from1 < to2;
   }
 
-  updateBooking(idBooking){
-    // tester que idBooking different de vide
-    if(idBooking === null){
-      return "id is missing"
+  updateBooking(Booking){
+    // je check qu'une valeur est passée
+    if(!Booking){
+      throw "booking object is undefined"
     }
-    // tester existence de l'idBooking dans db
-    
-
+    let current = this.db.get('bookings').find(x => x.id === Booking.id);
+    // je récupère le booking en question dans la db
+    // let currentBooking = this.getBookingById(Booking.id); NE MARCHE PAS
+    // si qqconque modifs repérées
+    if( Booking.jetpackId   !== current.jetpackId  ||
+        Booking.start_date  !== current.start_date ||
+        Booking.end_date    !== current.end_date ) 
+        {
+          // je màj dans la db (remplace currentBooking par Booking)
+          this.db.get('bookings')
+            .assign(({currentBooking, Booking}))
+            .write();
+          // je retourne le nouvel objet
+          return this.db.get('bookings').find(x => x.id === Booking.id);
+        }
+    // si aucune modifs repérées, je retourne ce message
+    return "no change detected";
   }
-
+  
   deleteBooking(idBooking){}
 
 };
