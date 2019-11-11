@@ -527,50 +527,6 @@
 			"response": []
 		},
 		{
-			"name": "Delete booking",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "a3a8cc79-3726-4813-9fd9-28058affdaec",
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							""
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "fa6180dc-f325-4a21-a506-15feafa13924",
-						"exec": [
-							"pm.globals.set('url', 'http://localhost:3000')"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/bookings/{{booking.id}}",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"bookings",
-						"{{booking.id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Update booking",
 			"event": [
 				{
@@ -623,6 +579,50 @@
 						}
 					}
 				},
+				"url": {
+					"raw": "{{url}}/bookings/{{booking.id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"bookings",
+						"{{booking.id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete booking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a3a8cc79-3726-4813-9fd9-28058affdaec",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "fa6180dc-f325-4a21-a506-15feafa13924",
+						"exec": [
+							"pm.globals.set('url', 'http://localhost:3000')"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
 				"url": {
 					"raw": "{{url}}/bookings/{{booking.id}}",
 					"host": [
