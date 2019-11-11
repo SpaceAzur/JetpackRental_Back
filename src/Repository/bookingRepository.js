@@ -115,6 +115,15 @@ module.exports = class {
     return to1 > from2 && from1 < to2;
   }
 
+  
+  bookingContainsJetpack(idJetpack){
+    let booking_containing_jetpack = this.db.get('bookings')
+      .find(({jetpackId: idJetpack}))
+      .value();
+
+    return booking_containing_jetpack !== undefined;
+  }
+
   updateBooking(Booking){
     if (!Booking) {
       throw 'Booking object is undefined';
