@@ -17,10 +17,14 @@ module.exports = class {
       throw 'Booking object is missing information';
     }
 
-    this.db
-      .get('bookings')
-      .push(booking.toJson())
-      .write()
+    if(this.isJetpackAvailable(booking.jetpackId, booking.start_date, booking.end_date)) {
+      this.db
+        .get('bookings')
+        .push(booking.toJson())
+        .write()
+    } else {
+      throw 'Jetpack not available on this period';
+    }
   }
 
   getAllBookings(){
@@ -32,12 +36,12 @@ module.exports = class {
   getBookingById(idToSearch){
     if(!idToSearch){
       throw "id is missing";
-    } 
+    }
     let currentBooking = this.db
       .get('bookings')
       .find(({id: idToSearch}))
       .value();
-    
+
     if(currentBooking !== null || currentBooking !== undefined) {
       return currentBooking;
     }
@@ -111,14 +115,34 @@ module.exports = class {
     return to1 > from2 && from1 < to2;
   }
 
-  updateBooking(idBooking){
-    // tester que idBooking different de vide
-    if(idBooking === null){
-      return "id is missing"
+  updateBooking(Booking){
+    if (!Booking) {
+      throw 'Booking object is undefined';
     }
-    // tester existence de l'idBooking dans db
-    
 
+    let idBooking = Booking.id;
+    let idJetpack = Booking.jetpackId;
+    let startDate = Booking.start_date;
+    let endDate = Booking.end_date;
+
+    // tester existence des parametres du Booking
+    if(!idBooking ||
+      !idJetpack ||
+      !startDate ||
+      !endDate
+    ) {
+      throw "Booking data is missing, can't update the booking";
+    }
+
+    // On met a jour le booking dans la BD si le jetpack est disponible aux dates sélectionnées
+    if (this.isJetpackAvailable(idJetpack, startDate, endDate)) {
+      this.db.get('bookings')
+        .find({id: idBooking})
+        .assign({jetpackId: idJetpack, start_date: startDate, end_date: endDate})
+        .write()
+    } else {
+      throw 'Jetpack not available on this period';
+    }
   }
 
   deleteBooking(idBooking){

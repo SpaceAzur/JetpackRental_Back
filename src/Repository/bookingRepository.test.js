@@ -34,6 +34,8 @@ describe('Booking Repository create', function () {
 
   test('Create complete booking => OK', () => {
     const dbMock = {
+      find: jest.fn().mockReturnThis(),
+      value: jest.fn().mockReturnThis(),
       get : jest.fn().mockReturnThis(),
       push : jest.fn().mockReturnThis(),
       write : jest.fn().mockReturnThis()
@@ -47,6 +49,29 @@ describe('Booking Repository create', function () {
     repository.create(booking);
 
     expect(dbMock.write.mock.calls.length).toBe(1);
+  });
+
+  test('Create booking for unvailable jetpack => throw \"Jetpack not available on this period\"', () => {
+    const dbMock = {
+      find: jest.fn().mockReturnThis(),
+      value: jest.fn().mockReturnValue(
+        {id: 2, jetpackId: "11", start_date: "2019-09-01", end_date: "2019-12-31"}),
+
+      get : jest.fn().mockReturnThis(),
+      push : jest.fn().mockReturnThis(),
+      write : jest.fn().mockReturnThis()
+    };
+    const repository = new BookingRepository(dbMock);
+    let booking = new Booking();
+    booking.id = 1;
+    booking.jetpackId = "11";
+    booking.start_date = "2019-09-01";
+    booking.end_date = "2019-12-31";
+
+    expect(() => {
+      repository.create(booking)
+    }).toThrow('Jetpack not available on this period');
+
   });
 });
 
@@ -84,8 +109,8 @@ describe('Get Booking by ID', function () {
       get: jest.fn().mockReturnThis(),
       find: jest.fn().mockReturnThis(),
       value: jest.fn().mockReturnValue([
-        { id: "rg456kj", 
-          jetpackId: "jetpack1", 
+        { id: "rg456kj",
+          jetpackId: "jetpack1",
           start_date: "2019-09-01",
           end_date: "2019-12-31"
         }
@@ -93,18 +118,18 @@ describe('Get Booking by ID', function () {
     };
     const repository = new BookingRepository(dbMock);
     expect(repository.getBookingById("rg456kj")).toEqual(
-        [{ id: "rg456kj", 
-          jetpackId: "jetpack1", 
+        [{ id: "rg456kj",
+          jetpackId: "jetpack1",
           start_date: "2019-09-01",
           end_date: "2019-12-31"
         }]
       );
     });
-  
+
   test("get booking by Id => No id received in function", () => {
     let dbMock = {};
     let repository = new BookingRepository(dbMock);
-    expect(()=>{repository.getBookingById()}).toThrow("id is missing");  
+    expect(()=>{repository.getBookingById()}).toThrow("id is missing");
   });
 
 });
@@ -182,6 +207,66 @@ describe('Overlapse booking interval', function () {
 
 describe('Update Booking', function () {
   test('Update booking => OK', () => {
+    const dbMock = {
+      get : jest.fn().mockReturnThis(),
+      value : jest.fn().mockReturnThis(),
+      find : jest.fn().mockReturnThis(),
+      assign : jest.fn().mockReturnThis(),
+      write : jest.fn().mockReturnThis()
+    };
+    const repository = new BookingRepository(dbMock);
+    let booking = new Booking();
+    booking.id = 1;
+    booking.jetpackId = "12";
+    booking.start_date = "2019-03-01";
+    booking.end_date = "2019-05-25";
+
+    repository.updateBooking(booking);
+    expect(dbMock.write.mock.calls.length).toBe(1);
+  });
+
+  test('Update booking without object => throw \"Booking object is undefined\"', () => {
+    const repository = new BookingRepository();
+
+    expect(() => {
+      repository.updateBooking()
+    }).toThrow('Booking object is undefined');
+  });
+
+  test('Update booking with missing parameter => throw \"Booking data is missing, can\'t update the booking\"', () => {
+    const repository = new BookingRepository();
+
+    expect(() => {
+      repository.updateBooking({
+        id:'11',
+        jetpackId: "",
+        start_date: "2019-09-01",
+        end_date: "2019-12-31"
+      })
+    }).toThrow('Booking data is missing, can\'t update the booking');
+  });
+
+  test('Update booking in unavailable period for the jetpack => throw \"Jetpack not available on this period\"', () => {
+    const dbMock = {
+      find: jest.fn().mockReturnThis(),
+      value: jest.fn().mockReturnValue(
+        {id: 1, jetpackId: "11", start_date: "2019-09-01", end_date: "2019-12-31"}),
+
+      get: jest.fn().mockReturnThis(),
+      assign : jest.fn().mockReturnThis(),
+      write : jest.fn().mockReturnThis()
+    };
+    const repository = new BookingRepository(dbMock);
+    let booking = new Booking();
+    booking.id = 1;
+    booking.jetpackId = "11";
+    booking.start_date = "2019-09-01";
+    booking.end_date = "2019-12-31";
+
+    expect(() => {
+      repository.updateBooking(booking)
+    }).toThrow('Jetpack not available on this period');
+
   });
 });
 

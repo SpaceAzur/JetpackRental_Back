@@ -200,4 +200,50 @@ describe('Jetpack repository getJetpacksAvailable', function () {
       }]
     );
   });
+
+  describe('Update Jetpack', function () {
+    test('Update jetpack => OK', () => {
+      const dbMock = {
+        get : jest.fn().mockReturnThis(),
+        find : jest.fn().mockReturnThis(),
+        assign : jest.fn().mockReturnThis(),
+        write : jest.fn().mockReturnThis()
+      };
+
+      const repository = new JetpackRepository(dbMock);
+      let jetpack = new JetPack();
+      jetpack.id = 1;
+      jetpack.image = "image_jetpack_updated;jpg";
+      jetpack.name = "jetpack_updated";
+
+      repository.updateJetpack(jetpack);
+      expect(dbMock.write.mock.calls.length).toBe(1);
+    });
+
+    test('Update jetpack without object => Throw \"Jetpack object is undefined\"', () => {
+      const repository = new JetpackRepository();
+
+      expect(() => {
+        repository.updateJetpack()
+      }).toThrow('Jetpack object is undefined')
+    });
+
+    test('Update jetpack with missing parameter => throw \"Jetpack data is missing, can\'t update the jetpack\"', () => {
+      const repository = new JetpackRepository();
+
+      expect(() => {
+        repository.updateJetpack({
+          id:'11',
+          name: "",
+          image: "2019-12-31"
+        })
+      }).toThrow('Jetpack data is missing, can\'t update the jetpack');
+    });
+  });
+
+  describe('Delete Jetpack', function () {
+    test('Delete jetpack => OK', () => {
+
+    });
+  });
 });

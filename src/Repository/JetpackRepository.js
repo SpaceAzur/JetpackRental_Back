@@ -61,7 +61,29 @@ module.exports = class {
     }
   }
 
-  updateJetpack(idJetpack){}
+  updateJetpack(Jetpack){
+    if (!Jetpack) {
+      throw 'Jetpack object is undefined';
+    }
+
+    let idJetpack = Jetpack.id;
+    let jetName = Jetpack.name;
+    let jetImage = Jetpack.image;
+
+    // tester existence des parametres du jetpack
+    if(!idJetpack ||
+      !jetName ||
+      !jetImage
+    ) {
+      throw "Jetpack data is missing, can't update the jetpack";
+    }
+
+    // On met a jour le jetpack dans la BD
+    this.db.get('jetpacks')
+      .find({id: idJetpack})
+      .assign({ image: jetImage, name: jetName})
+      .write()
+  }
 
   deleteJetpack(){}
 };
