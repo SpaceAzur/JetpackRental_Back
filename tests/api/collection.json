@@ -505,7 +505,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{url}}/jetpacks?start_date=2019-09-01&end_date=2019-12-31",
+					"raw": "{{url}}/jetpacks?start_date=2019-01-01&end_date=2019-03-01",
 					"host": [
 						"{{url}}"
 					],
@@ -515,11 +515,11 @@
 					"query": [
 						{
 							"key": "start_date",
-							"value": "2019-09-01"
+							"value": "2019-01-01"
 						},
 						{
 							"key": "end_date",
-							"value": "2019-12-31"
+							"value": "2019-03-01"
 						}
 					]
 				}
