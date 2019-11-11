@@ -34,6 +34,8 @@ describe('Booking Repository create', function () {
 
   test('Create complete booking => OK', () => {
     const dbMock = {
+      find: jest.fn().mockReturnThis(),
+      value: jest.fn().mockReturnThis(),
       get : jest.fn().mockReturnThis(),
       push : jest.fn().mockReturnThis(),
       write : jest.fn().mockReturnThis()
@@ -184,6 +186,7 @@ describe('Update Booking', function () {
   test('Update booking => OK', () => {
     const dbMock = {
       get : jest.fn().mockReturnThis(),
+      value : jest.fn().mockReturnThis(),
       find : jest.fn().mockReturnThis(),
       assign : jest.fn().mockReturnThis(),
       write : jest.fn().mockReturnThis()
