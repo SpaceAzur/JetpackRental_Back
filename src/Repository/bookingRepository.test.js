@@ -198,6 +198,27 @@ describe('Update Booking', function () {
     repository.updateBooking(booking);
     expect(dbMock.write.mock.calls.length).toBe(1);
   });
+
+  test('Update booking without object => throw \"Booking object is undefined\"', () => {
+    const repository = new BookingRepository();
+
+    expect(() => {
+      repository.updateBooking()
+    }).toThrow('Booking object is undefined');
+  });
+
+  test('Update booking with missing parameter => throw \"Booking data is missing, can\'t update the booking\"', () => {
+    const repository = new BookingRepository();
+
+    expect(() => {
+      repository.updateBooking({
+        id:'11',
+        jetpackId: "",
+        start_date: "2019-09-01",
+        end_date: "2019-12-31"
+      })
+    }).toThrow('Booking data is missing, can\'t update the booking');
+  });
 });
 
 describe('Delete Booking', function () {
