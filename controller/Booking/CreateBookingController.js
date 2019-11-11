@@ -12,7 +12,12 @@ module.exports = (req, res) => {
   booking.end_date = req.body.end_date;
 
   const repository = new BookingRepository(db);
-  repository.create(booking);
-  res.header("Access-Control-Allow-Origin", "*");
-  res.status(201).send(booking.toJson())
+  try {
+    repository.create(booking);
+    res.header("Access-Control-Allow-Origin", "*");
+    res.status(201).send(booking.toJson());
+  } catch (e) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.status(424).send(e);
+  }
 };

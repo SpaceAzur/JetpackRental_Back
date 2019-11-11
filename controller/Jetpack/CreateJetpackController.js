@@ -11,7 +11,12 @@ module.exports = (req, res) => {
     jetpack.image = req.body.image;
 
     const repository = new JetpackRepository(db);
-    repository.create(jetpack);
-    res.header("Access-Control-Allow-Origin", "*");
-    res.status(201).send(jetpack.toJson())
+    try {
+      repository.create(jetpack);
+      res.header("Access-Control-Allow-Origin", "*");
+      res.status(201).send(jetpack.toJson());
+    } catch (e) {
+      res.header("Access-Control-Allow-Origin", "*");
+      res.status(424).send(e);
+    }
 };
