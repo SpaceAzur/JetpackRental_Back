@@ -11,6 +11,7 @@ app.get('/jetpacks/:start_date/:end_date', require('./controller/Jetpack/GetJetp
 
 app.get('/bookings/:id?', require('./controller/Booking/GetBookingController'));
 app.post('/bookings/create', require('./controller/Booking/CreateBookingController'));
+app.delete('/bookings/:id?/delete', require('./controller/Booking/DeleteBookingController'));
 
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!')

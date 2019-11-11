@@ -257,19 +257,9 @@
 			"name": "Get liste bookings",
 			"event": [
 				{
-					"listen": "prerequest",
-					"script": {
-						"id": "9a4a0969-9e08-40c9-8a5b-e8eb18e2e26c",
-						"exec": [
-							"pm.globals.set('url', 'http://localhost:3000')"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
 					"listen": "test",
 					"script": {
-						"id": "783cca14-ba85-4daa-b49a-15a4c0799288",
+						"id": "a9a0b076-c2b9-4bc5-aceb-4256eab131be",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -284,6 +274,16 @@
 							"    pm.expect(jsonData[0].end_date).to.eql(\"2019-12-31\");",
 							"});",
 							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "04ff4695-01f0-43fd-aafd-ea4cf53a043a",
+						"exec": [
+							"pm.globals.set('url', 'http://localhost:3000')"
 						],
 						"type": "text/javascript"
 					}
@@ -377,6 +377,51 @@
 						"jetpacks",
 						"2019-01-01",
 						"2019-03-31"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete booking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a3a8cc79-3726-4813-9fd9-28058affdaec",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "fa6180dc-f325-4a21-a506-15feafa13924",
+						"exec": [
+							"pm.globals.set('url', 'http://localhost:3000')"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/bookings/{{booking.id}}/delete",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"bookings",
+						"{{booking.id}}",
+						"delete"
 					]
 				}
 			},

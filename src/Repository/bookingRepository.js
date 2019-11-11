@@ -121,6 +121,22 @@ module.exports = class {
 
   }
 
-  deleteBooking(idBooking){}
+  deleteBooking(idBooking){
+    if(idBooking !== undefined) {
+      let existingBooking = this.db.get('bookings')
+        .find(({id: idBooking}))
+        .value();
+
+      if(existingBooking !== undefined){
+        this.db.get('bookings')
+          .remove(({id: idBooking}))
+          .write();
+      } else {
+        throw 'Unable to delete an unknown booking';
+      }
+    } else {
+      throw 'Unable to delete a booking whithout id';
+    }
+  }
 
 };
