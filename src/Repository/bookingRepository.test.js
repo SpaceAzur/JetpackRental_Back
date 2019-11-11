@@ -84,8 +84,8 @@ describe('Get Booking by ID', function () {
       get: jest.fn().mockReturnThis(),
       find: jest.fn().mockReturnThis(),
       value: jest.fn().mockReturnValue([
-        { id: "rg456kj", 
-          jetpackId: "jetpack1", 
+        { id: "rg456kj",
+          jetpackId: "jetpack1",
           start_date: "2019-09-01",
           end_date: "2019-12-31"
         }
@@ -93,18 +93,18 @@ describe('Get Booking by ID', function () {
     };
     const repository = new BookingRepository(dbMock);
     expect(repository.getBookingById("rg456kj")).toEqual(
-        [{ id: "rg456kj", 
-          jetpackId: "jetpack1", 
+        [{ id: "rg456kj",
+          jetpackId: "jetpack1",
           start_date: "2019-09-01",
           end_date: "2019-12-31"
         }]
       );
     });
-  
+
   test("get booking by Id => No id received in function", () => {
     let dbMock = {};
     let repository = new BookingRepository(dbMock);
-    expect(()=>{repository.getBookingById()}).toThrow("id is missing");  
+    expect(()=>{repository.getBookingById()}).toThrow("id is missing");
   });
 
 });
@@ -182,6 +182,21 @@ describe('Overlapse booking interval', function () {
 
 describe('Update Booking', function () {
   test('Update booking => OK', () => {
+    const dbMock = {
+      get : jest.fn().mockReturnThis(),
+      find : jest.fn().mockReturnThis(),
+      assign : jest.fn().mockReturnThis(),
+      write : jest.fn().mockReturnThis()
+    };
+    const repository = new BookingRepository(dbMock);
+    let booking = new Booking();
+    booking.id = 1;
+    booking.jetpackId = "12";
+    booking.start_date = "2019-03-01";
+    booking.end_date = "2019-05-25";
+
+    repository.updateBooking(booking);
+    expect(dbMock.write.mock.calls.length).toBe(1);
   });
 });
 
