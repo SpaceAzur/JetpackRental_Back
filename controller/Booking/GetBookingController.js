@@ -19,6 +19,7 @@ module.exports = (req, res) => {
     console.log('Recuperation booking id: ' + id_booking);
     const repo = new BookingRepository(db);
     let booking = repo.getBookingById(id_booking);
+    res.header("Access-Control-Allow-Origin", "*");
     res.status(200).send(booking);
   }
 };

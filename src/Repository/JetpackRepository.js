@@ -85,5 +85,27 @@ module.exports = class {
       .write()
   }
 
-  deleteJetpack(){}
+  deleteJetpack(idJetpack){
+    if(idJetpack !== undefined) {
+      let existingJetpack = this.db.get('jetpacks')
+        .find(({id: idJetpack}))
+        .value();
+
+      if(existingJetpack !== undefined){
+        // On verifie que le jetpack n'est pas contenu dans un booking
+        let repository = new BookingRepository(this.db);
+        if(!repository.bookingContainsJetpack(idJetpack)) {
+          this.db.get('jetpacks')
+            .remove(({id: idJetpack}))
+            .write();
+        } else {
+          throw 'A jetpack booked can\'t be delete. Delete the booking before'
+        }
+      } else {
+        throw 'Unable to delete an unknown jetpack';
+      }
+    } else {
+      throw 'Unable to delete a jetpack whithout id';
+    }
+  }
 };
