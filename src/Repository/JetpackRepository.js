@@ -60,4 +60,8 @@ module.exports = class {
       throw 'You have to choose start and end dates';
     }
   }
+
+  updateJetpack(idJetpack){}
+
+  deleteJetpack(){}
 };
