@@ -192,6 +192,71 @@
 			"response": []
 		},
 		{
+			"name": "Update jetpack",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e1a02e3f-4c17-447f-9a04-49eaf67d1fd7",
+						"exec": [
+							"pm.globals.set('url', 'http://localhost:3000')"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "6e9b2d39-1990-4f8b-ad2d-b77d1cd186ae",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Update jetpack: Json bdy has information\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.name).to.eql(\"jetpack_name_updated\");",
+							"    pm.expect(jsonData.image).to.eql(\"jetpack_image_updated.png\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"image\": \"jetpack_image_updated.png\",\n\t\"name\": \"jetpack_name_updated\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/jetpacks/{{jetpack.id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"jetpacks",
+						"{{jetpack.id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Create a booking",
 			"event": [
 				{
@@ -509,19 +574,9 @@
 			"name": "Update booking",
 			"event": [
 				{
-					"listen": "prerequest",
-					"script": {
-						"id": "28e620b0-c571-4a2f-b63d-11f7bd68821d",
-						"exec": [
-							"pm.globals.set('url', 'http://localhost:3000')"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
 					"listen": "test",
 					"script": {
-						"id": "1f50258f-3882-4a34-8bb8-528daf7ee15d",
+						"id": "51200e58-be19-45df-a688-ff15928181e3",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -532,8 +587,18 @@
 							"    ",
 							"    pm.expect(jsonData.jetpackId).to.eql( pm.globals.get(\"jetpack.id\") );",
 							"    pm.expect(jsonData.start_date).to.eql(\"2019-06-01\");",
-							"    pm.expect(jsonData.end_date).to.eql(\"2019-09-01\");",
+							"    pm.expect(jsonData.end_date).to.eql(\"2019-12-01\");",
 							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "93d49d73-b998-407f-9286-5664d6e2adf2",
+						"exec": [
+							"pm.globals.set('url', 'http://localhost:3000')"
 						],
 						"type": "text/javascript"
 					}
@@ -551,7 +616,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"jetpackId\": \"{{jetpack.id}}\",\n\t\"start_date\": \"2019-06-01\",\n\t\"end_date\": \"2019-09-01\"\n}",
+					"raw": "{\n\t\"jetpackId\": \"{{jetpack.id}}\",\n\t\"start_date\": \"2019-06-01\",\n\t\"end_date\": \"2019-12-01\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
