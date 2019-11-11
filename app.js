@@ -13,7 +13,7 @@ app.use(function(req, res, next) {
 //.route('/jetpacks/:id?')
 // Jetpacks
 // GET pour récupérer la liste des Jetpacks
-app.get('/jetpacks/:id?', require('./controller/Jetpack/GetJetpackController'));
+app.get('/jetpacks', require('./controller/Jetpack/GetJetpackController'));
 // POST pour créer un jetpack
 app.post('/jetpacks/', require('./controller/Jetpack/CreateJetpackController'));
 // PUT pour mettre a jour un jetpack
