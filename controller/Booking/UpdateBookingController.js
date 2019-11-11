@@ -9,7 +9,7 @@ module.exports = (req, res) => {
   booking.start_date = req.body.start_date;
   booking.end_date = req.body.end_date;
 
-  console.log("Mise a jour booking: " + id_booking);
+  console.log("Mise a jour booking: " + booking.id);
 
   const repository = new BookingRepository(db);
   try {
