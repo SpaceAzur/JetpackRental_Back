@@ -130,68 +130,6 @@
 			"response": []
 		},
 		{
-			"name": "Get Jet Pack by ID",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "29cc937c-0294-49cd-ba3e-31f7b5f41eac",
-						"exec": [
-							"pm.globals.set('url', 'http://localhost:3000')"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"id": "4cffee8b-566b-4c46-aa99-e2b76d4487bc",
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"Get Jetpack by ID: Json bdy has information\", function () {",
-							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.name).to.eql(\"Jet Pack à fusion X98371\");",
-							"    pm.expect(jsonData.image).to.eql(\"Base 64 ...\");",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"name\":\"Jet Pack à fusion X98371\",\n\t\"image\": \"Base 64 ...\"\n}"
-				},
-				"url": {
-					"raw": "{{url}}/jetpacks/{{jetpack.id}}",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"jetpacks",
-						"{{jetpack.id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Update jetpack",
 			"event": [
 				{
