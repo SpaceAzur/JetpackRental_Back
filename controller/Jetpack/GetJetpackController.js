@@ -18,7 +18,6 @@ module.exports = (req, res) => {
     console.log('Recuperation de la liste des jetpacks')
     const repository = new JetpackRepository(db);
     let jetpacks = repository.getAll();
-    res.header("Access-Control-Allow-Origin", "*");
     res.status(200).send(jetpacks);
 
   } else if (my_id === undefined &&
@@ -33,7 +32,6 @@ module.exports = (req, res) => {
       let jetpacksAvailable = repository.getJetpacksAvailable(startDate, endDate);
       res.status(200).send(jetpacksAvailable);
     } catch (e) {
-      res.header("Access-Control-Allow-Origin", "*");
       res.status(424).send(e);
     }
 
@@ -42,10 +40,8 @@ module.exports = (req, res) => {
     const repository = new JetpackRepository(db);
     try {
       let jetpack = repository.getJetpackById(my_id);
-      res.header("Access-Control-Allow-Origin", "*");
       res.status(200).send(jetpack)
     } catch (e) {
-      res.header("Access-Control-Allow-Origin", "*");
       res.status(424).send(e)
     }
   }

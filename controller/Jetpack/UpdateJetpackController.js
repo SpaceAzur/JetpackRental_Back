@@ -13,10 +13,8 @@ module.exports = (req, res) => {
   const repository = new JetpackRepository(db);
   try {
     repository.updateJetpack(jetpack);
-    res.header("Access-Control-Allow-Origin", "*");
     res.status(200).send(jetpack.toJson());
   } catch (e) {
-    res.header("Access-Control-Allow-Origin", "*");
     res.status(424).send(e);
   }
 };
