@@ -17,10 +17,14 @@ module.exports = class {
       throw 'Booking object is missing information';
     }
 
-    this.db
-      .get('bookings')
-      .push(booking.toJson())
-      .write()
+    if(this.isJetpackAvailable(booking.jetpackId, booking.start_date, booking.end_date)) {
+      this.db
+        .get('bookings')
+        .push(booking.toJson())
+        .write()
+    } else {
+      throw 'Jetpack not available on this period';
+    }
   }
 
   getAllBookings(){
@@ -129,11 +133,16 @@ module.exports = class {
     ) {
       throw "Booking data is missing, can't update the booking";
     }
-    // On met a jour le booking dans la BD
-    this.db.get('bookings')
-      .find({ id: idBooking })
-      .assign({ jetpackId: idJetpack, start_date: startDate, end_date: endDate })
-      .write()
+
+    // On met a jour le booking dans la BD si le jetpack est disponible aux dates sélectionnées
+    if (this.isJetpackAvailable(idJetpack, startDate, endDate)) {
+      this.db.get('bookings')
+        .find({id: idBooking})
+        .assign({jetpackId: idJetpack, start_date: startDate, end_date: endDate})
+        .write()
+    } else {
+      throw 'Jetpack not available on this period';
+    }
   }
 
   deleteBooking(idBooking){
