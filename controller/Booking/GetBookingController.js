@@ -6,9 +6,6 @@ const BookingRepository = require('../../src/Repository/bookingRepository');
 module.exports = (req, res) => {
   // Recuperation des parametres
   let id_booking = req.params.id;
-  let id_jetpack = req.params.jetpackId;
-  let date_debut = req.params.start_date;
-  let date_fin = req.params.end_date;
 
   //Pas d'id en parametre => On affiche la liste des reservations
   if(id_booking === undefined){
@@ -17,6 +14,7 @@ module.exports = (req, res) => {
     let bookings = repo.getAllBookings();
     res.header("Access-Control-Allow-Origin", "*");
     res.status(200).send(bookings)
+
   } else {
     console.log('Recuperation booking id: ' + id_booking);
     const repo = new BookingRepository(db);
