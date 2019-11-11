@@ -257,6 +257,71 @@
 			"response": []
 		},
 		{
+			"name": "Update jetpack 2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e1a02e3f-4c17-447f-9a04-49eaf67d1fd7",
+						"exec": [
+							"pm.globals.set('url', 'http://localhost:3000')"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "6e9b2d39-1990-4f8b-ad2d-b77d1cd186ae",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Update jetpack: Json bdy has information\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.name).to.eql(\"Jet Pack à fusion X98371\");",
+							"    pm.expect(jsonData.image).to.eql(\"Base 64 ...\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"image\": \"Base 64 ...\",\n\t\"name\": \"Jet Pack à fusion X98371\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/jetpacks/{{jetpack.id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"jetpacks",
+						"{{jetpack.id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Create a booking",
 			"event": [
 				{
@@ -505,7 +570,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{url}}/jetpacks?start_date=2019-09-01&end_date=2019-12-31",
+					"raw": "{{url}}/jetpacks?start_date=2019-01-01&end_date=2019-03-31",
 					"host": [
 						"{{url}}"
 					],
@@ -515,11 +580,11 @@
 					"query": [
 						{
 							"key": "start_date",
-							"value": "2019-09-01"
+							"value": "2019-01-01"
 						},
 						{
 							"key": "end_date",
-							"value": "2019-12-31"
+							"value": "2019-03-31"
 						}
 					]
 				}
