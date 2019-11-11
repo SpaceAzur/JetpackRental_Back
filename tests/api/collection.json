@@ -504,6 +504,72 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Update booking",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "28e620b0-c571-4a2f-b63d-11f7bd68821d",
+						"exec": [
+							"pm.globals.set('url', 'http://localhost:3000')"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "1f50258f-3882-4a34-8bb8-528daf7ee15d",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Update booking: Json bdy has information\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.jetpackId).to.eql( pm.globals.get(\"jetpack.id\") );",
+							"    pm.expect(jsonData.start_date).to.eql(\"2019-06-01\");",
+							"    pm.expect(jsonData.end_date).to.eql(\"2019-09-01\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"jetpackId\": \"{{jetpack.id}}\",\n\t\"start_date\": \"2019-06-01\",\n\t\"end_date\": \"2019-09-01\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/bookings/{{booking.id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"bookings",
+						"{{booking.id}}"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
