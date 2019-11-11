@@ -542,8 +542,8 @@
 							"    var jsonData = pm.response.json();",
 							"    ",
 							"    pm.expect(jsonData.jetpackId).to.eql( pm.globals.get(\"jetpack.id\") );",
-							"    pm.expect(jsonData.start_date).to.eql(\"2019-06-01\");",
-							"    pm.expect(jsonData.end_date).to.eql(\"2019-12-01\");",
+							"    pm.expect(jsonData.start_date).to.eql(\"2020-01-01\");",
+							"    pm.expect(jsonData.end_date).to.eql(\"2020-03-01\");",
 							"});"
 						],
 						"type": "text/javascript"
@@ -572,7 +572,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"jetpackId\": \"{{jetpack.id}}\",\n\t\"start_date\": \"2019-06-01\",\n\t\"end_date\": \"2019-12-01\"\n}",
+					"raw": "{\n\t\"jetpackId\": \"{{jetpack.id}}\",\n\t\"start_date\": \"2020-01-01\",\n\t\"end_date\": \"2020-03-01\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
