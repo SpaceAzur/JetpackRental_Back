@@ -53,13 +53,13 @@
 					"raw": "{\n\t\"name\":\"Jet Pack à fusion X98371\",\n\t\"image\": \"Base 64 ...\"\n}"
 				},
 				"url": {
-					"raw": "{{url}}/jetpacks/create",
+					"raw": "{{url}}/jetpacks/",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
 						"jetpacks",
-						"create"
+						""
 					]
 				}
 			},
@@ -241,13 +241,13 @@
 					"raw": "{\n\t\"jetpackId\": \"{{jetpack.id}}\",\n\t\"start_date\": \"2019-09-01\",\n\t\"end_date\": \"2019-12-31\"\n}"
 				},
 				"url": {
-					"raw": "{{url}}/bookings/create",
+					"raw": "{{url}}/bookings/",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
 						"bookings",
-						"create"
+						""
 					]
 				}
 			},
@@ -319,6 +319,77 @@
 			"response": []
 		},
 		{
+			"name": "Get booking by ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e949670c-9537-4ec0-9480-eb1f9bd0bc86",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// Test que le premier élément de la liste est notre booking",
+							"pm.test(\"Get Booking by ID: Json bdy has information\", function () {",
+							"    let id = pm.globals.get(\"booking.id\");",
+							"    if(id){",
+							"        var jsonData = pm.response.json();",
+							"",
+							"        pm.expect(jsonData.jetpackId).to.be.an('string').that.is.not.empty ;",
+							"        pm.expect(jsonData.start_date).to.eql(\"2019-09-01\");",
+							"        pm.expect(jsonData.end_date).to.eql(\"2019-12-31\");",
+							"    } else {",
+							"        pm.response.to.have.header(\"Content-Length\");",
+							"        pm.expect(pm.response.length).to.eql(undefined);",
+							"        //pm.response.to.have.header(\"Content-Length\");",
+							"        //let length = pm.response.headers(\"Content-Length\").value",
+							"        //pm.expect(length).to.eql(\"0\");",
+							"        ",
+							"        //pm.expect(jsonData).to.have.response.Content-Length.to.eql(\"0\")",
+							"        //pm.expect(jsonData.Content-Length).to.eql(\"0\");",
+							"        ",
+							"        //var jsonData2 = pm.response.json();",
+							"        //pm.expect(jsonData2).to.have.header('Content-Length');",
+							"        //pm.expect(jsonData2).to.have.length(0);",
+							"        //pm.expect(jsonData.content.data.length).to.eql(0);",
+							"        //pm.expect(jsonData2.Content-Length).to.be.eql(0);",
+							"    }",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d2dfe7df-ceba-4a93-aca8-edc65d939b17",
+						"exec": [
+							"pm.globals.set('url', 'http://localhost:3000')",
+							"pm.globals.get(\"booking.id\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/bookings/{{booking.id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"bookings",
+						"{{booking.id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get jetpacks available",
 			"event": [
 				{
@@ -369,14 +440,22 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{url}}/jetpacks/2019-01-01/2019-03-31",
+					"raw": "{{url}}/jetpacks?start_date=2019-09-01&end_date=2019-12-31",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"jetpacks",
-						"2019-01-01",
-						"2019-03-31"
+						"jetpacks"
+					],
+					"query": [
+						{
+							"key": "start_date",
+							"value": "2019-09-01"
+						},
+						{
+							"key": "end_date",
+							"value": "2019-12-31"
+						}
 					]
 				}
 			},
@@ -414,14 +493,13 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/bookings/{{booking.id}}/delete",
+					"raw": "{{url}}/bookings/{{booking.id}}",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
 						"bookings",
-						"{{booking.id}}",
-						"delete"
+						"{{booking.id}}"
 					]
 				}
 			},
